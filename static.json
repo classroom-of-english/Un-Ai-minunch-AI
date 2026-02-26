@@ -1,0 +1,8 @@
+{
+  "root": "assets",
+  "index_file": "jsdelivr.html",
+  "clean_urls": true,
+  "routes": {
+    "/": "jsdelivr.html"
+  }
+}

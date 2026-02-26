@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: ghostlinkhub
+    env: static
+    staticPublishPath: assets
+    routes:
+      - type: rewrite
+        source: /
+        destination: /jsdelivr.html
