@@ -1,7 +1,0 @@
-[build]
-  publish = "assets"
-
-[[redirects]]
-  from = "/"
-  to = "/jsdelivr.html"
-  status = 200
