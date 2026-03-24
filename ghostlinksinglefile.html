@@ -122,6 +122,7 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
+        button, input, select, textarea, optgroup { font-family: var(--font); }
 
         body {
             background-color: var(--bg);
@@ -670,7 +671,7 @@
             overflow-y: auto;
             padding: 24px;
             flex-grow: 1;
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-family: var(--font);
             font-size: 0.9rem;
             line-height: 1.7;
             display: none;
@@ -680,7 +681,7 @@
         .readme-body h1, .readme-body h2, .readme-body h3 { color: var(--accent); margin: 1.2em 0 0.4em; }
         .readme-body h1 { font-size: 1.5em; border-bottom: 1px solid var(--border); padding-bottom: 8px; }
         .readme-body h2 { font-size: 1.2em; }
-        .readme-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.85em; color: var(--accent); }
+        .readme-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: var(--font); font-size: 0.85em; color: var(--accent); }
         .readme-body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; padding: 14px; overflow-x: auto; margin: 12px 0; }
         .readme-body pre code { background: transparent; padding: 0; color: white; }
         .readme-body a { color: var(--accent); text-decoration: underline; }
@@ -711,7 +712,7 @@
         }
         .version-item:hover { border-color: var(--accent); background: rgba(255,255,255,0.06); }
         .version-sha {
-            font-family: 'Courier New', monospace;
+            font-family: var(--font);
             font-size: 0.7rem;
             color: var(--accent);
             background: rgba(110,203,255,0.1);
@@ -778,7 +779,7 @@
         .version-detail-meta span { color: var(--accent); }
         .version-detail-body { color: #d1d5db; }
         .version-detail-body h1, .version-detail-body h2, .version-detail-body h3 { color: var(--accent); margin: 1em 0 0.4em; }
-        .version-detail-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.85em; color: var(--accent); }
+        .version-detail-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: var(--font); font-size: 0.85em; color: var(--accent); }
         .version-detail-body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; padding: 14px; overflow-x: auto; margin: 10px 0; }
         .version-detail-body pre code { background: transparent; padding: 0; color: white; }
         .version-detail-body a { color: var(--accent); }
@@ -856,12 +857,12 @@
             padding: 20px 24px;
             flex-grow: 1;
             color: var(--text-dim);
-            font-family: 'Inter', 'Segoe UI', sans-serif;
+            font-family: var(--font);
             font-size: 0.88rem;
             line-height: 1.7;
         }
         .update-body h1, .update-body h2, .update-body h3 { color: var(--accent); margin: 1em 0 0.4em; }
-        .update-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: 'Courier New', monospace; font-size: 0.85em; color: var(--accent); }
+        .update-body code { background: rgba(255,255,255,0.08); padding: 2px 6px; border-radius: 4px; font-family: var(--font); font-size: 0.85em; color: var(--accent); }
         .update-body pre { background: rgba(0,0,0,0.4); border: 1px solid var(--border); border-radius: 8px; padding: 14px; overflow-x: auto; margin: 10px 0; }
         .update-body pre code { background: transparent; padding: 0; color: var(--text-primary); }
         .update-body a { color: var(--accent); }
@@ -2351,7 +2352,60 @@
                     <label>Presets</label>
                     <div class="preset-container" id="preset-list"></div>
                     <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
-                    <button class="btn-start" onclick="openAboutBlankCloak()" style="margin-top:0; width:100%;">OPEN IN ABOUT:BLANK</button>
+                        <button class="btn-start" onclick="openAboutBlankCloak()" style="margin-top:0; width:100%;">OPEN IN ABOUT:BLANK</button>
+                    </div>
+                </div>
+
+                <div class="settings-card">
+                    <h3>Stealth</h3>
+                    <p style="font-size:0.8rem; color:var(--text-dim); margin-bottom:18px; line-height:1.5;">Auto-cloaking and stealth.</p>
+
+                    <div style="display:flex; align-items:center; justify-content:space-between;">
+                        <div>
+                            <div style="font-size:0.88rem; font-weight:bold; color:var(--text-primary);">AFK Cloak</div>
+                            <div style="font-size:0.75rem; color:var(--text-dim); margin-top:3px; line-height:1.4;">Overlay Clever when you're away.<br>Move mouse or type to restore.</div>
+                        </div>
+                        <div class="toggle-switch" id="afk-cloak-toggle" onclick="toggleAfkCloak()" style="cursor:pointer; margin-left:14px; flex-shrink:0;">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+                    <div id="afk-timeout-group" style="display:none; margin-top:10px;">
+                        <label style="display:block; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:6px;">Idle Timeout (seconds)</label>
+                        <input type="number" id="afk-timeout-input" value="30" min="5" max="600" oninput="saveAfkSettings()">
+                    </div>
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+                        <div>
+                            <div style="font-size:0.88rem; font-weight:bold; color:var(--text-primary);">Mouse-Leave Cloak</div>
+                            <div style="font-size:0.75rem; color:var(--text-dim); margin-top:3px; line-height:1.4;">Cloak instantly when cursor exits the window.</div>
+                        </div>
+                        <div class="toggle-switch" id="mouseleave-cloak-toggle" onclick="toggleMouseLeaveCloak()" style="cursor:pointer; margin-left:14px; flex-shrink:0;">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <!-- TAB-SWITCH CLOAK -->
+                    <div style="display:flex; align-items:center; justify-content:space-between; margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+                        <div>
+                            <div style="font-size:0.88rem; font-weight:bold; color:var(--text-primary);">Tab-Switch Cloak</div>
+                            <div style="font-size:0.75rem; color:var(--text-dim); margin-top:3px; line-height:1.4;">Cloak when you switch to another tab.</div>
+                        </div>
+                        <div class="toggle-switch" id="vischange-cloak-toggle" onclick="toggleVisChangeCloak()" style="cursor:pointer; margin-left:14px; flex-shrink:0;">
+                            <div class="toggle-knob"></div>
+                        </div>
+                    </div>
+
+                    <!-- CLOAK PAGE SELECTOR -->
+                    <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+                        <label style="display:block; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Cloak Page</label>
+                        <select id="cloak-page-select" onchange="saveCloakPage(this.value)"></select>
+                    </div>
+
+                    <!-- PANIC KEY -->
+                    <div style="margin-top:16px; padding-top:16px; border-top:1px solid var(--border);">
+                        <div style="font-size:0.88rem; font-weight:bold; color:var(--text-primary); margin-bottom:4px;">Panic Key</div>
+                        <div style="font-size:0.75rem; color:var(--text-dim); margin-bottom:10px; line-height:1.4;">Instantly activates the cloak overlay. Reload the page to revert to normal.</div>
+                        <label style="display:block; font-size:0.75rem; color:var(--text-dim); text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">Panic Key (Alt + ?)</label>
+                        <input type="text" class="shortcut-input" id="sc-panic" readonly onclick="captureShortcut('panic')" style="text-align:center;">
                     </div>
                 </div>
 
@@ -2397,20 +2451,20 @@
                     </div>
                     <div class="input-group">
                         <label>Font Family</label>
-                        <select id="font-select" onchange="document.getElementById('font-custom-family').value=''; applyTheme(); if(window.__glAch) window.__glAch.onSettingChanged('font')">
+                        <select id="font-select" onchange="applyTheme(); if(window.__glAch) window.__glAch.onSettingChanged('font')">
                             <option value="'Courier New', monospace">Retro Mono</option>
                             <option value="'Inter', sans-serif">Modern Sans</option>
                             <option value="'Segoe UI', sans-serif">System UI</option>
                         </select>
                     </div>
-                    <div class="input-group">
+                    <div class="input-group" id="font-custom-section">
                         <label>Custom Font URL <span style="color:var(--accent); font-size:0.7em;">(Google Fonts / any CSS stylesheet)</span></label>
                         <input type="text" id="font-url-input" placeholder="https://fonts.googleapis.com/css2?family=Orbitron&display=swap">
                         <div style="display:flex; gap:8px; margin-top:8px;">
                             <input type="text" id="font-custom-family" placeholder="Font family name, e.g. Orbitron" style="flex:1; margin:0;" oninput="applyTheme()">
                             <button class="btn-small run" onclick="loadCustomFont()" style="white-space:nowrap; flex-shrink:0;">LOAD</button>
                         </div>
-                        <p style="font-size:0.7rem; color:var(--text-dim); margin-top:6px;">Enter the font name exactly as it appears on Google Fonts, then hit LOAD.</p>
+                        <p style="font-size:0.7rem; color:var(--text-dim); margin-top:6px;">Enter the font name exactly as it appears on Google Fonts and LOAD.</p>
                     </div>
                 </div>
 
@@ -2479,14 +2533,9 @@
                         <label>Open Games (Alt + ?)</label>
                         <input type="text" class="shortcut-input" id="sc-games" readonly onclick="captureShortcut('games')">
                     </div>
-                    <div class="input-group">
-                        <label>Panic Key (Immediate Cloak)</label>
-                        <input type="text" class="shortcut-input" id="sc-panic" readonly onclick="captureShortcut('panic')">
-                    </div>
-
                     <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border);">
                         <p style="font-size: 10px; color: var(--text-dim); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px;">Custom Keybinds</p>
-                        <div id="custom-shortcuts-list"></div>
+                        <div id="custom-shortcuts-list" style="max-height:138px; overflow-y:auto; display:flex; flex-direction:column; gap:8px;"></div>
                         <div class="custom-shortcut-row" style="margin-top: 10px;">
                             <input type="text" class="shortcut-input" id="new-sc-key" placeholder="KEY" readonly style="width:60px; flex-shrink:0;" onclick="captureNewShortcutKey()">
                             <select id="new-sc-action" style="flex:1; margin:0; padding:10px 12px;">
@@ -2574,7 +2623,7 @@
 
                 <div class="settings-card">
                     <h3>System Management</h3>
-                    <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 15px;">Export your apps and settings to a JSON file or import them from another device.</p>
+                    <p style="font-size: 0.8rem; color: var(--text-dim); margin-bottom: 15px;">Export <strong>everything</strong> — apps, shortcuts, settings, proxy config, cloaking, game favorites, achievements, and more — to a JSON file, or import from another device.</p>
                     <div style="display: flex; flex-direction: column; gap: 10px;">
                         <button class="btn-start" onclick="exportData()" style="margin-top:0;">EXPORT CONFIG</button>
                         <button class="btn-start" onclick="document.getElementById('import-file').click()" style="margin-top:0; background:#333; color:white;">IMPORT CONFIG</button>
@@ -2640,7 +2689,7 @@
             </div>
         </div>
 
-        <!-- GAMES SECTION (native) -->
+        <!-- GAMES SECTION -->
         <section id="games-content" class="view-section" style="padding: 20px; align-items: center;">
 
             <div class="games-featured-wrapper" id="gamesFeaturedWrapper" style="display:none;">
@@ -2670,7 +2719,7 @@
             <div id="gamesContainer">Loading zones...</div>
         </section>
 
-        <!-- ZONE VIEWER OVERLAY (used by games section) -->
+        <!-- ZONE VIEWER OVERLAY -->
         <div id="zoneViewer">
             <div class="zone-header">
                 <div>
@@ -2685,7 +2734,7 @@
             <iframe id="zoneFrame"></iframe>
         </div>
 
-        <!-- PROXY SECTION (native — full index.html browser integrated) -->
+        <!-- PROXY SECTION  -->
         <section id="proxy-content" class="view-section">
             <div id="proxy-app"></div>
         </section>
@@ -2824,6 +2873,7 @@
       --bg-brightness: var(--nt-bg-brightness,  100%);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    button, input, select, textarea, optgroup { font-family: var(--font); }
     ::-webkit-scrollbar        { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track  { background: transparent; }
     ::-webkit-scrollbar-thumb  { background: var(--accent); border-radius: 3px; }
@@ -3234,6 +3284,19 @@
         document.body.style.backgroundColor = t.bg || '';
         document.body.style.color = t.textPrimary || '';
         document.body.style.fontFamily = t.font || '';
+        // Inject any custom font stylesheets sent from the parent
+        if (t.customFontUrls && Array.isArray(t.customFontUrls)) {
+          t.customFontUrls.forEach(function(url) {
+            var linkId = 'nt-custom-font-' + url.replace(/[^a-z0-9]/gi, '-');
+            if (!document.getElementById(linkId)) {
+              var link = document.createElement('link');
+              link.id = linkId;
+              link.rel = 'stylesheet';
+              link.href = url;
+              document.head.appendChild(link);
+            }
+          });
+        }
       }
     });
     // Tell the parent we are ready so it can push the current theme immediately
@@ -3953,19 +4016,47 @@
         }
 
         // --- KEYBOARD SHORTCUTS ---
+        function getUsedShortcutKeys(excludeAction, excludeCustomIndex) {
+            const used = [];
+            if (excludeAction !== 'home')  used.push(shortcuts.home);
+            if (excludeAction !== 'games') used.push(shortcuts.games);
+            if (excludeAction !== 'panic') used.push(shortcuts.panic);
+            shortcuts.custom.forEach((sc, i) => {
+                if (excludeAction === 'custom' && i === excludeCustomIndex) return;
+                used.push(sc.key);
+            });
+            return used.filter(Boolean).map(k => k.toUpperCase());
+        }
+
+        function flashShortcutError(input, msg) {
+            input.value = msg || 'TAKEN!';
+            input.style.borderColor = '#ff4444';
+            input.style.color = '#ff4444';
+            setTimeout(() => {
+                input.style.borderColor = '';
+                input.style.color = '';
+                syncShortcutUI();
+            }, 1200);
+        }
+
         function captureShortcut(action) {
             const input = document.getElementById(`sc-${action}`);
             input.value = "PRESS KEY...";
             const listener = (e) => {
                 e.preventDefault();
                 const key = e.key.toUpperCase();
-                if (key !== "ALT" && key !== "CONTROL" && key !== "SHIFT") {
-                    shortcuts[action] = key;
-                    input.value = key;
-                    localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
+                if (key === "ALT" || key === "CONTROL" || key === "SHIFT" || key === "META") return;
+                const used = getUsedShortcutKeys(action, null);
+                if (used.includes(key)) {
                     window.removeEventListener('keydown', listener);
-                    input.blur();
+                    flashShortcutError(input, 'TAKEN!');
+                    return;
                 }
+                shortcuts[action] = key;
+                input.value = key;
+                localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
+                window.removeEventListener('keydown', listener);
+                input.blur();
             };
             window.addEventListener('keydown', listener);
         }
@@ -4007,11 +4098,25 @@
             const listener = (e) => {
                 e.preventDefault();
                 const key = e.key.toUpperCase();
-                if (key !== "ALT" && key !== "CONTROL" && key !== "SHIFT" && key !== "META") {
-                    input.value = key;
+                if (key === "ALT" || key === "CONTROL" || key === "SHIFT" || key === "META") return;
+                // check against all existing shortcuts except custom (new entry not yet added)
+                const used = getUsedShortcutKeys('custom', -1);
+                if (used.includes(key)) {
                     window.removeEventListener('keydown', listener);
-                    input.blur();
+                    const prev = input.value;
+                    input.value = 'TAKEN!';
+                    input.style.borderColor = '#ff4444';
+                    input.style.color = '#ff4444';
+                    setTimeout(() => {
+                        input.style.borderColor = '';
+                        input.style.color = '';
+                        input.value = '';
+                    }, 1200);
+                    return;
                 }
+                input.value = key;
+                window.removeEventListener('keydown', listener);
+                input.blur();
             };
             window.addEventListener('keydown', listener);
         }
@@ -4024,23 +4129,48 @@
             const listener = (e) => {
                 e.preventDefault();
                 const key = e.key.toUpperCase();
-                if (key !== "ALT" && key !== "CONTROL" && key !== "SHIFT" && key !== "META") {
-                    shortcuts.custom[index].key = key;
-                    localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
+                if (key === "ALT" || key === "CONTROL" || key === "SHIFT" || key === "META") return;
+                const used = getUsedShortcutKeys('custom', index);
+                if (used.includes(key)) {
                     window.removeEventListener('keydown', listener);
-                    renderCustomShortcuts();
+                    input.value = 'TAKEN!';
+                    input.style.borderColor = '#ff4444';
+                    input.style.color = '#ff4444';
+                    setTimeout(() => {
+                        input.style.borderColor = '';
+                        input.style.color = '';
+                        renderCustomShortcuts();
+                    }, 1200);
+                    return;
                 }
+                shortcuts.custom[index].key = key;
+                localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
+                window.removeEventListener('keydown', listener);
+                renderCustomShortcuts();
             };
             window.addEventListener('keydown', listener);
         }
 
         function addCustomShortcut() {
-            const key = document.getElementById('new-sc-key').value.trim();
+            const keyInput = document.getElementById('new-sc-key');
+            const key = keyInput.value.trim().toUpperCase();
             const action = document.getElementById('new-sc-action').value;
             if (!key || key === '...' || key === 'KEY') return;
+            const used = getUsedShortcutKeys('custom', -1);
+            if (used.includes(key)) {
+                keyInput.value = 'TAKEN!';
+                keyInput.style.borderColor = '#ff4444';
+                keyInput.style.color = '#ff4444';
+                setTimeout(() => {
+                    keyInput.style.borderColor = '';
+                    keyInput.style.color = '';
+                    keyInput.value = '';
+                }, 1200);
+                return;
+            }
             shortcuts.custom.push({ key, action });
             localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
-            document.getElementById('new-sc-key').value = '';
+            keyInput.value = '';
             renderCustomShortcuts();
         }
 
@@ -4067,6 +4197,200 @@
             newTab.document.write(script);
             newTab.document.close();
         }
+        (function() {
+            const CLEVER_URL = 'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/clever.html';
+            let on = false, secs = 30, timer = null, active = false, cleverCache = null, savedTitle, panicMode = false;
+
+            async function prefetchClever() {
+                if (cleverCache) return cleverCache;
+                try { const r = await fetch(CLEVER_URL + '?_=' + Date.now()); if (r.ok) cleverCache = await r.text(); } catch(e) {}
+                return cleverCache;
+            }
+            async function activate(force) {
+                if (active) return;
+                if (!force && !on) return;
+                active = true;
+                savedTitle = document.title;
+
+                const overlay = document.getElementById('afk-cloak-overlay');
+                const frame   = document.getElementById('afk-cloak-frame');
+                overlay.style.display = 'block';
+                document.getElementById('afk-cloak-interceptor').focus();
+
+                const pageId = localStorage.getItem('gl_cloak_page') || 'clever';
+                const page = CLOAK_PAGES.find(p => p.id === pageId) || CLOAK_PAGES[0];
+                document.title = page.title || page.label;
+                setFaviconFromUrl(page.favicon);
+                if (page.id === 'clever') {
+                    const html = await prefetchClever();
+                    if (html) { frame.removeAttribute('src'); frame.srcdoc = html; }
+                    else { frame.removeAttribute('srcdoc'); frame.src = page.url; }
+                } else {
+                    try {
+                        const r = await fetch(page.url + '?_=' + Date.now());
+                        if (r.ok) { frame.removeAttribute('src'); frame.srcdoc = await r.text(); }
+                        else throw 0;
+                    } catch(_) { frame.removeAttribute('srcdoc'); frame.src = page.url; }
+                }
+            }
+
+            function deactivate() {
+                if (!active) return;
+                active = false;
+                const overlay = document.getElementById('afk-cloak-overlay');
+                overlay.style.display = 'none';
+                const f = document.getElementById('afk-cloak-frame');
+                f.removeAttribute('srcdoc'); f.src = 'about:blank';
+                document.title = savedTitle || 'GhostLink';
+                applyCloak();
+                reset();
+            }
+
+            function reset() { clearTimeout(timer); if (on) timer = setTimeout(() => activate(false), secs * 1000); }
+            function activity() { if (panicMode) return; active ? deactivate() : reset(); }
+
+            ['mousemove','mousedown','keydown','touchstart','scroll'].forEach(e => document.addEventListener(e, activity, {passive:true}));
+
+            const interceptor = () => document.getElementById('afk-cloak-interceptor');
+            document.addEventListener('DOMContentLoaded', () => {
+                ['mousemove','mousedown','keydown','touchstart'].forEach(e => interceptor()?.addEventListener(e, () => { if (!panicMode) deactivate(); }, {passive:true}));
+                secs = +localStorage.getItem('afkCloakTimeout') || 30;
+                document.getElementById('afk-timeout-input').value = secs;
+                if (localStorage.getItem('afkCloakEnabled') === '1') {
+                    on = true;
+                    document.getElementById('afk-cloak-toggle').classList.add('active');
+                    document.getElementById('afk-timeout-group').style.display = 'block';
+                    reset();
+                }
+                if (localStorage.getItem('gl_cloak_mouseleave') === '1')
+                    document.getElementById('mouseleave-cloak-toggle')?.classList.add('active');
+                if (localStorage.getItem('gl_cloak_vischange') === '1')
+                    document.getElementById('vischange-cloak-toggle')?.classList.add('active');
+                const savedCustom = localStorage.getItem('gl_cloak_content');
+                if (savedCustom) {
+                    const el = document.getElementById('cloak-custom-content');
+                    if (el) el.value = savedCustom;
+                }
+                (function() {
+                    const sel = document.getElementById('cloak-page-select');
+                    if (!sel) return;
+                    CLOAK_PAGES.forEach(p => {
+                        const opt = document.createElement('option');
+                        opt.value = p.id; opt.textContent = p.label;
+                        sel.appendChild(opt);
+                    });
+                    const saved = localStorage.getItem('gl_cloak_page') || 'clever';
+                    sel.value = saved;
+                })();
+                setTimeout(prefetchClever, 2000);
+            });
+            window.__cloakActivate   = () => activate(true);
+            window.__cloakDeactivate = () => deactivate();
+            window.__setPanicMode    = (v) => {
+                panicMode = v;
+                const ic = document.getElementById('afk-cloak-interceptor');
+                if (ic) ic.style.pointerEvents = v ? 'none' : '';
+                const fr = document.getElementById('afk-cloak-frame');
+                if (fr) fr.style.pointerEvents = v ? 'auto' : 'none';
+            };
+
+            // Block all keyboard input while panic mode is active (except the panic toggle key itself)
+            document.addEventListener('keydown', function(e) {
+                if (!panicMode) return;
+                // Allow Alt+PanicKey to toggle off
+                const sc = JSON.parse(localStorage.getItem('ghostlink_shortcuts') || '{}');
+                const panicKey = (sc.panic || 'P').toUpperCase();
+                if (e.altKey && e.key.toUpperCase() === panicKey) return;
+                e.preventDefault();
+                e.stopPropagation();
+            }, true); // capture phase so it fires before everything else
+
+            window.toggleAfkCloak = function() {
+                on = !on;
+                document.getElementById('afk-cloak-toggle').classList.toggle('active', on);
+                document.getElementById('afk-timeout-group').style.display = on ? 'block' : 'none';
+                localStorage.setItem('afkCloakEnabled', on ? '1' : '0');
+                on ? reset() : (clearTimeout(timer), active && deactivate());
+            };
+            window.saveAfkSettings = function() {
+                const v = +document.getElementById('afk-timeout-input').value;
+                if (v >= 5) { secs = v; localStorage.setItem('afkCloakTimeout', v); if (on) reset(); }
+            };
+        })();
+        document.addEventListener('mouseleave', function(e) {
+            if (localStorage.getItem('gl_cloak_mouseleave') !== '1') return;
+            if (e.clientY <= 0 || e.clientX <= 0 || e.clientX >= window.innerWidth || e.clientY >= window.innerHeight) {
+                window.__cloakActivate && window.__cloakActivate();
+            }
+        });
+        document.addEventListener('mouseenter', function() {
+            if (localStorage.getItem('gl_cloak_mouseleave') !== '1') return;
+            if (window.__panicActive) return;
+            window.__cloakDeactivate && window.__cloakDeactivate();
+        });
+
+        window.toggleMouseLeaveCloak = function() {
+            const nowOn = localStorage.getItem('gl_cloak_mouseleave') !== '1';
+            localStorage.setItem('gl_cloak_mouseleave', nowOn ? '1' : '0');
+            document.getElementById('mouseleave-cloak-toggle').classList.toggle('active', nowOn);
+        };
+        document.addEventListener('visibilitychange', function() {
+            if (localStorage.getItem('gl_cloak_vischange') !== '1') return;
+            if (document.hidden) {
+                window.__cloakActivate && window.__cloakActivate();
+            } else {
+                if (window.__panicActive) return;
+                window.__cloakDeactivate && window.__cloakDeactivate();
+            }
+        });
+
+        window.toggleVisChangeCloak = function() {
+            const nowOn = localStorage.getItem('gl_cloak_vischange') !== '1';
+            localStorage.setItem('gl_cloak_vischange', nowOn ? '1' : '0');
+            document.getElementById('vischange-cloak-toggle').classList.toggle('active', nowOn);
+        };
+
+        const CLOAK_PAGES = [
+            {
+                id:      'clever',
+                label:   'Clever',
+                url:     'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/clever.html',
+                title:   'Clever',
+                favicon: 'https://clever.com'
+            },
+            {
+                id:      'deltamath',
+                label:   'DeltaMath',
+                url:     'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/deltamath.html',
+                title:   'DeltaMath',
+                favicon: 'https://www.deltamath.com/'
+            },
+            {
+                id:      'smithsonian',
+                label:   'Smithsonian Learning Lab',
+                url:     'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/smithsonian.html',
+                title:   'Smithsonian Learning Lab',
+                favicon: 'https://learninglab.si.edu/'
+            },
+            {
+                id:      'ck12',
+                label:   'ck12',
+                url:     'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/ck12.html',
+                title:   'Free online textbook',
+                favicon: 'https://www.ck12.org/'
+            },
+            {
+                id:      'Coursera',
+                label:   'Coursera',
+                url:     'https://cdn.jsdelivr.net/gh/virtuan4-max/ghostlinkhub@main/assets/safety/coursera.html',
+                title:   'Coursera | Degrees, Profesional Certificates, and Degrees Online',
+                favicon: 'https://www.coursera.org/'
+            },
+        ];
+
+        window.saveCloakPage = function(id) {
+            localStorage.setItem('gl_cloak_page', id);
+        };
 
         // --- README MODAL ---
         let readmeLoaded = false;
@@ -4307,12 +4631,43 @@
 
         // --- IMPORT / EXPORT ---
         function exportData() {
+            const get = (k, fallback) => { try { const v = localStorage.getItem(k); return v !== null ? JSON.parse(v) : fallback; } catch { return localStorage.getItem(k) ?? fallback; } };
+            const raw = (k) => localStorage.getItem(k);
             const data = {
-                apps: customApps,
-                shortcuts: shortcuts,
-                config: JSON.parse(localStorage.getItem('ghostlink_config')),
-                navOrder: navOrder,
-                words: words
+                _version: 2,
+                // Core app data
+                apps:           customApps,
+                shortcuts:      shortcuts,
+                config:         get('ghostlink_config', null),
+                navOrder:       navOrder,
+                words:          words,
+                customPresets:  get('ghostlink_custom_presets', []),
+                // NT tab
+                ntShortcuts:    get('gl_shortcuts', null),
+                ntSearchEngine: raw('gl_search_engine'),
+                // Proxy / browser
+                proxServer:     raw('proxServer'),
+                wispAutoswitch: raw('wispAutoswitch'),
+                proxyMaxTabs:   raw('proxyMaxTabs'),
+                customWisps:    get('customWisps', []),
+                proxyBookmarks: get('proxyBookmarks', []),
+                // Cloaking / AFK
+                afkCloakEnabled:   raw('afkCloakEnabled'),
+                afkCloakTimeout:   raw('afkCloakTimeout'),
+                cloakPage:         raw('gl_cloak_page'),
+                cloakContent:      raw('gl_cloak_content'),
+                cloakMouseleave:   raw('gl_cloak_mouseleave'),
+                cloakVischange:    raw('gl_cloak_vischange'),
+                // Games
+                gamesFavorites: get('gn-favs', []),
+                // Achievements & counters
+                achievements:   get('gl_achievements', {}),
+                visitCount:     raw('gl_visit_count'),
+                lastVisit:      raw('gl_last_visit'),
+                initSysCount:   raw('gl_init_sys'),
+                legalSeen:      get('gl_legal_seen', []),
+                caught4kDismissed: raw('gl_4k_dismissed'),
+                seenCommit:     raw('ghostlink_seen_commit'),
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
             const url = URL.createObjectURL(blob);
@@ -4329,25 +4684,43 @@
             reader.onload = (e) => {
                 try {
                     const data = JSON.parse(e.target.result);
-                    if (data.apps) {
-                        customApps = data.apps;
-                        localStorage.setItem('ghostlink_apps', JSON.stringify(customApps));
-                    }
-                    if (data.shortcuts) {
-                        shortcuts = data.shortcuts;
-                        localStorage.setItem('ghostlink_shortcuts', JSON.stringify(shortcuts));
-                    }
-                    if (data.config) {
-                        localStorage.setItem('ghostlink_config', JSON.stringify(data.config));
-                    }
-                    if (data.navOrder) {
-                        navOrder = data.navOrder;
-                        localStorage.setItem('ghostlink_nav_order', JSON.stringify(navOrder));
-                    }
-                    if (data.words && Array.isArray(data.words) && data.words.length > 0) {
-                        words = data.words;
-                        localStorage.setItem('ghostlink_words', JSON.stringify(words));
-                    }
+                    const set = (k, v) => { if (v != null) localStorage.setItem(k, typeof v === 'string' ? v : JSON.stringify(v)); };
+                    const raw = (k, v) => { if (v != null) localStorage.setItem(k, v); };
+
+                    // Core app data
+                    if (data.apps) { customApps = data.apps; set('ghostlink_apps', customApps); }
+                    if (data.shortcuts) { shortcuts = data.shortcuts; set('ghostlink_shortcuts', shortcuts); }
+                    if (data.config) set('ghostlink_config', data.config);
+                    if (data.navOrder) { navOrder = data.navOrder; set('ghostlink_nav_order', navOrder); }
+                    if (data.words && Array.isArray(data.words) && data.words.length > 0) { words = data.words; set('ghostlink_words', words); }
+                    if (data.customPresets) set('ghostlink_custom_presets', data.customPresets);
+                    // NT tab
+                    if (data.ntShortcuts) set('gl_shortcuts', data.ntShortcuts);
+                    if (data.ntSearchEngine) raw('gl_search_engine', data.ntSearchEngine);
+                    // Proxy / browser
+                    if (data.proxServer) raw('proxServer', data.proxServer);
+                    if (data.wispAutoswitch != null) raw('wispAutoswitch', data.wispAutoswitch);
+                    if (data.proxyMaxTabs != null) raw('proxyMaxTabs', data.proxyMaxTabs);
+                    if (data.customWisps) set('customWisps', data.customWisps);
+                    if (data.proxyBookmarks) set('proxyBookmarks', data.proxyBookmarks);
+                    // Cloaking / AFK
+                    if (data.afkCloakEnabled != null) raw('afkCloakEnabled', data.afkCloakEnabled);
+                    if (data.afkCloakTimeout != null) raw('afkCloakTimeout', data.afkCloakTimeout);
+                    if (data.cloakPage) raw('gl_cloak_page', data.cloakPage);
+                    if (data.cloakContent) raw('gl_cloak_content', data.cloakContent);
+                    if (data.cloakMouseleave != null) raw('gl_cloak_mouseleave', data.cloakMouseleave);
+                    if (data.cloakVischange != null) raw('gl_cloak_vischange', data.cloakVischange);
+                    // Games
+                    if (data.gamesFavorites) set('gn-favs', data.gamesFavorites);
+                    // Achievements & counters
+                    if (data.achievements) set('gl_achievements', data.achievements);
+                    if (data.visitCount != null) raw('gl_visit_count', data.visitCount);
+                    if (data.lastVisit != null) raw('gl_last_visit', data.lastVisit);
+                    if (data.initSysCount != null) raw('gl_init_sys', data.initSysCount);
+                    if (data.legalSeen) set('gl_legal_seen', data.legalSeen);
+                    if (data.caught4kDismissed) raw('gl_4k_dismissed', data.caught4kDismissed);
+                    if (data.seenCommit) raw('ghostlink_seen_commit', data.seenCommit);
+
                     alert("Import successful! Reloading...");
                     location.reload();
                 } catch (err) {
@@ -4511,9 +4884,7 @@
 
         function applyTheme() {
             const color = document.getElementById('theme-color').value;
-            const fontSelectVal = document.getElementById('font-select').value;
-            const customFontFamily = document.getElementById('font-custom-family')?.value.trim();
-            const fontToApply = customFontFamily || fontSelectVal;
+            const fontToApply = document.getElementById('font-select').value;
             document.documentElement.style.setProperty('--accent', color);
             document.documentElement.style.setProperty('--accent-glow', color + '4D');
             document.documentElement.style.setProperty('--font', fontToApply);
@@ -4539,6 +4910,10 @@
         function syncColor(val) { document.getElementById('theme-color').value = val; applyTheme(); }
         
         function saveConfig() {
+            const sel = document.getElementById('font-select');
+            const customFonts = Array.from(sel.options)
+                .filter(o => o.dataset.customFont)
+                .map(o => ({ family: o.value, url: o.dataset.customFontUrl }));
             localStorage.setItem('ghostlink_config', JSON.stringify({
                 title: document.getElementById('cloak-title').value,
                 icon: document.getElementById('cloak-icon').value,
@@ -4547,9 +4922,11 @@
                 bgUrl: document.getElementById('bg-url').value,
                 bgBlur: document.getElementById('bg-blur-input').value,
                 bgBright: document.getElementById('bg-bright-input').value,
-                font: document.getElementById('font-select').value,
-                fontUrl: document.getElementById('font-url-input')?.value || '',
-                fontCustomFamily: document.getElementById('font-custom-family')?.value || '',
+                font: sel.value,
+                customFonts: customFonts,
+                // legacy fields kept for backward compat
+                fontUrl: customFonts[0]?.url || '',
+                fontCustomFamily: customFonts[0]?.family || '',
                 initTarget: document.getElementById('init-target-select')?.value || 'games',
                 clockFormat: document.getElementById('clock-format-select')?.value || '24h-s',
                 dateFormat: document.getElementById('date-format-select')?.value || 'full',
@@ -4568,20 +4945,38 @@
             const familyInput = document.getElementById('font-custom-family');
             if (!url) return;
 
-            document.getElementById('custom-font-link')?.remove();
-            const link = document.createElement('link');
-            link.id = 'custom-font-link';
-            link.rel = 'stylesheet';
-            link.href = url;
-            document.head.appendChild(link);
-
-            if (!familyInput.value.trim()) {
+            let familyName = familyInput.value.trim();
+            if (!familyName) {
                 const match = url.match(/[?&]family=([^&:]+)/);
                 if (match) {
-                    const detected = decodeURIComponent(match[1].replace(/\+/g, ' ').split(':')[0]);
-                    familyInput.value = detected;
+                    familyName = decodeURIComponent(match[1].replace(/\+/g, ' ').split(':')[0]);
                 }
             }
+            if (!familyName) return;
+
+            const sel = document.getElementById('font-select');
+            // If this family is already in the list, just select it and apply
+            const existing = Array.from(sel.options).find(o => o.value === familyName);
+            if (!existing) {
+                // Inject stylesheet (use unique id per font)
+                const linkId = 'custom-font-link-' + familyName.replace(/\s+/g, '-');
+                if (!document.getElementById(linkId)) {
+                    const link = document.createElement('link');
+                    link.id = linkId;
+                    link.rel = 'stylesheet';
+                    link.href = url;
+                    document.head.appendChild(link);
+                }
+                const opt = document.createElement('option');
+                opt.value = familyName;
+                opt.textContent = familyName;
+                opt.dataset.customFont = 'true';
+                opt.dataset.customFontUrl = url;
+                sel.appendChild(opt);
+            }
+            sel.value = familyName;
+            familyInput.value = '';
+            document.getElementById('font-url-input').value = '';
 
             applyTheme();
             if (!silentLoad) saveConfig();
@@ -4678,12 +5073,31 @@
                 document.getElementById('bg-blur-input').value = saved.bgBlur || "0";
                 document.getElementById('bg-bright-input').value = saved.bgBright || "100";
                 document.getElementById('font-select').value = saved.font || "'Courier New', monospace";
-                if (saved.fontUrl) {
-                    document.getElementById('font-url-input').value = saved.fontUrl;
-                    loadCustomFont(true);
-                }
-                if (saved.fontCustomFamily) {
-                    document.getElementById('font-custom-family').value = saved.fontCustomFamily;
+                // Restore custom fonts — use new array format, fall back to legacy single-font fields
+                const fontsToRestore = saved.customFonts?.length
+                    ? saved.customFonts
+                    : (saved.fontUrl && saved.fontCustomFamily ? [{ url: saved.fontUrl, family: saved.fontCustomFamily }] : []);
+                if (fontsToRestore.length) {
+                    const sel = document.getElementById('font-select');
+                    fontsToRestore.forEach(({ url, family }) => {
+                        const linkId = 'custom-font-link-' + family.replace(/\s+/g, '-');
+                        if (!document.getElementById(linkId)) {
+                            const link = document.createElement('link');
+                            link.id = linkId;
+                            link.rel = 'stylesheet';
+                            link.href = url;
+                            document.head.appendChild(link);
+                        }
+                        if (!Array.from(sel.options).find(o => o.value === family)) {
+                            const opt = document.createElement('option');
+                            opt.value = family;
+                            opt.textContent = family;
+                            opt.dataset.customFont = 'true';
+                            opt.dataset.customFontUrl = url;
+                            sel.appendChild(opt);
+                        }
+                    });
+                    sel.value = saved.font || sel.value;
                 }
                 if (saved.initTarget) document.getElementById('init-target-select').value = saved.initTarget;
                 if (saved.clockFormat) document.getElementById('clock-format-select').value = saved.clockFormat;
@@ -4723,7 +5137,17 @@
                     const key = e.key.toUpperCase();
                     if (key === shortcuts.home) nav('home');
                     if (key === shortcuts.games) nav('games');
-                    if (key === shortcuts.panic) usePreset(tabPresets.length - 1); 
+                    if (key === shortcuts.panic) {
+                        if (window.__panicActive) {
+                            window.__panicActive = false;
+                            window.__setPanicMode && window.__setPanicMode(false);
+                            window.__cloakDeactivate && window.__cloakDeactivate();
+                        } else {
+                            window.__panicActive = true;
+                            window.__setPanicMode && window.__setPanicMode(true);
+                            window.__cloakActivate && window.__cloakActivate();
+                        }
+                    }
                     shortcuts.custom.forEach(sc => {
                         if (key === sc.key) nav(sc.action);
                     });
@@ -4818,6 +5242,8 @@
             if (typeof tabs === 'undefined' || !tabs.length) return;
             const s = getComputedStyle(document.documentElement);
             const g = (v) => s.getPropertyValue(v).trim();
+            const customFontUrls = Array.from(document.querySelectorAll('link[id^="custom-font-link-"]'))
+                .map(l => l.href).filter(Boolean);
             const theme = {
                 bg:            g('--bg'),
                 accent:        g('--accent'),
@@ -4831,6 +5257,7 @@
                 bgImage:       g('--bg-image'),
                 bgBlur:        g('--bg-blur'),
                 bgBrightness:  g('--bg-brightness'),
+                customFontUrls,
             };
             tabs.forEach(tab => {
                 const isNt = !tab.url || tab.url === 'NT.html' || (tab.url && tab.url.startsWith('blob:'));
@@ -5594,7 +6021,6 @@
                         const _origOpen = cw.open.bind(cw);
                         cw.open = function(url, target, features) {
                             if (url && url !== 'about:blank' && url !== '' && typeof url === 'string') {
-                                // Post to parent GhostLink to open as a new proxy tab
                                 window.postMessage({ type: 'gl_open_tab', url: url }, '*');
                                 return null;
                             }
@@ -6010,6 +6436,9 @@
             if (!ntTemplate) return;
             const _ntStyles = getComputedStyle(document.documentElement);
             const _ntGetVar = (v) => _ntStyles.getPropertyValue(v).trim();
+            const _customFontLinks = Array.from(document.querySelectorAll('link[id^="custom-font-link-"]'))
+                .map(l => `<link rel="stylesheet" href="${l.href}">`)
+                .join('');
             const _ntThemeScript = `<script>
 (function() {
     var r = document.documentElement;
@@ -6028,7 +6457,7 @@
 })();
 <\/script>`;
             let _ntHtml = ntTemplate.innerHTML;
-            _ntHtml = _ntHtml.includes('<head>') ? _ntHtml.replace('<head>', '<head>' + _ntThemeScript) : _ntThemeScript + _ntHtml;
+            _ntHtml = _ntHtml.includes('<head>') ? _ntHtml.replace('<head>', '<head>' + _customFontLinks + _ntThemeScript) : _customFontLinks + _ntThemeScript + _ntHtml;
             const oldUrl = window.__ntBlobURL;
             const ntBlob = new Blob([_ntHtml], { type: 'text/html' });
             window.__ntBlobURL = URL.createObjectURL(ntBlob);
@@ -6531,6 +6960,9 @@
             const ntTemplate = document.getElementById('nt-html-template');
             const _ntStyles = getComputedStyle(document.documentElement);
             const _ntGetVar = (v) => _ntStyles.getPropertyValue(v).trim();
+            const _customFontLinks = Array.from(document.querySelectorAll('link[id^="custom-font-link-"]'))
+                .map(l => `<link rel="stylesheet" href="${l.href}">`)
+                .join('');
             const _ntThemeScript = `<script>
 (function() {
     var r = document.documentElement;
@@ -6549,11 +6981,9 @@
 })();
 <\/script>`;
             let _ntHtml = ntTemplate.innerHTML;
-            _ntHtml = _ntHtml.includes('<head>') ? _ntHtml.replace('<head>', '<head>' + _ntThemeScript) : _ntThemeScript + _ntHtml;
+            _ntHtml = _ntHtml.includes('<head>') ? _ntHtml.replace('<head>', '<head>' + _customFontLinks + _ntThemeScript) : _customFontLinks + _ntThemeScript + _ntHtml;
             const ntBlob = new Blob([_ntHtml], { type: 'text/html' });
             window.__ntBlobURL = URL.createObjectURL(ntBlob);
-
-            // --- Show slow-load warning after 15s (keeps loading, just adds banner) ---
             const _slowTimer = setTimeout(() => {
                 const screen = document.getElementById('proxy-init-screen');
                 if (!screen) return;
@@ -6561,7 +6991,6 @@
                 if (existing) return;
                 const card = screen.querySelector('div');
                 if (!card) return;
-                // Widen the card so banner content isn't crushed
                 card.style.maxWidth = '480px';
                 card.style.width = '90%';
                 const banner = document.createElement('div');
@@ -6599,8 +7028,6 @@
                     </div>`;
                 card.appendChild(banner);
             }, 15000);
-
-            // --- Error screen (shown only on hard throw) ---
             const _showProxyError = (err) => {
                 clearTimeout(_slowTimer);
                 const root = document.getElementById('proxy-app');
@@ -7180,8 +7607,6 @@
                 if (e.key.length !== 1) { _homeBuf = ''; return; }
                 _homeBuf += e.key.toLowerCase();
                 if (_homeBuf.length > 11) _homeBuf = _homeBuf.slice(-11);
-
-                // Normalize: strip spaces for matching so "rip xrevan" and "ripxrevan" both work
                 const _bufNorm = _homeBuf.replace(/\s/g, '');
 
                 if (_homeBuf.endsWith('mirror')) {
@@ -7702,7 +8127,6 @@
                 <div style="background:var(--input-bg); border-radius:99px; height:6px; margin-bottom:32px; overflow:hidden; border:1px solid var(--border);">
                     <div style="background:var(--accent); height:100%; width:${pct}%; border-radius:99px; transition:width 0.5s ease; box-shadow:0 0 8px var(--accent-glow);"></div>
                 </div>`;
-            // Always 5 columns; content scaled with vw so proportions are device-independent
             const ACH_GRID = `display:grid; grid-template-columns:repeat(5, 1fr); gap:clamp(6px,0.8vw,12px); margin-bottom:32px;`;
             const ACH_CARD_BASE = `border-radius:12px; padding:clamp(8px,1vw,14px) clamp(8px,1vw,14px); display:flex; flex-direction:column; align-items:flex-start; gap:clamp(5px,0.5vw,8px);`;
             const ACH_EMOJI = `font-size:clamp(1.1rem,2vw,2rem); line-height:1; flex-shrink:0;`;
@@ -7922,6 +8346,19 @@
             setInterval(checkDevTools, 1000);
         })();
     </script>
+    <div id="afk-cloak-overlay" style="
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        background: #fff;
+    ">
+        <iframe id="afk-cloak-frame" style="width:100%;height:100%;border:none;display:block;position:absolute;inset:0;pointer-events:none;" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+        <div id="afk-cloak-interceptor" tabindex="0" style="
+            position:absolute;inset:0;z-index:1;
+            background:transparent;cursor:default;outline:none;
+        "></div>
+    </div>
 
     <div id="rip-xrevan-overlay" style="
         display: none;
